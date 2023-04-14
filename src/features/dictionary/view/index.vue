@@ -5,7 +5,6 @@ import DictionaryTable from './dictionary_table.vue'
 
 const dictionaryStore = useDictionaryStore()
 const {words} = storeToRefs(dictionaryStore)
-const {removeWord} = dictionaryStore
 </script>
 
 <template>
