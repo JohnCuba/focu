@@ -1,6 +1,6 @@
 import { SUPPORTED_PAIRS } from '~/config/app/langs'
-import { TranslatorApiService } from '~/features/dictionary/service/api/translator.api.service'
-import { DictionaryLocalService } from '~/features/dictionary/service/local/dictionary.local.service'
+import { TranslatorApiService } from './service/translator.api.service'
+import { DictionaryLocalService } from './service/dictionary.local.service'
 
 export class DictionaryRepository {
 	private localService!: DictionaryLocalService
