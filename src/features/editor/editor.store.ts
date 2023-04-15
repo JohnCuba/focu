@@ -10,12 +10,14 @@ export const useEditorStore = defineStore('editor', () => {
 	const value = ref('')
 
 	function submitWord() {
-		if (!value.value) return
+		const word = value.value
 
-		dictionaryStore?.setWord({
-			value: value.value
-		})
+		if (!word) return
+
 		_reset()
+		dictionaryStore?.setWord({
+			value: word
+		})
 	}
 
 	function _reset() {
