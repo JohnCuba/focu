@@ -1,3 +1,5 @@
+export type FetcherRequestMethod = 'GET' | 'POST'
+
 export type FetcherOptions = {
 	host: string
 }

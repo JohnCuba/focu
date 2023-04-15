@@ -1,4 +1,4 @@
-import { FetcherRequestOptions, type FetcherOptions } from './types'
+import { FetcherRequestOptions, type FetcherOptions, FetcherRequestMethod } from './types'
 
 // TODO: Make more functionality
 export class Fetcher {
@@ -14,13 +14,17 @@ export class Fetcher {
 		this._host = host
 	}
 
-	private async makeRequest(path: string, method: string, params?: FetcherRequestOptions) {
+	private prepareBody(data?: FetcherRequestOptions['body']) {
+		return data ? {body: JSON.stringify(data)} : {}
+	}
+
+	private async makeRequest(path: string, method: FetcherRequestMethod, params?: FetcherRequestOptions) {
 		const url = new URL(path, this.host)
-		const response = await fetch(
+		const response = await globalThis.fetch(
 			url,
 			{
 				method,
-				body: JSON.stringify(params?.body ?? ''),
+				...this.prepareBody(params?.body),
 				headers: {
 					...this._headers
 				}
@@ -31,15 +35,15 @@ export class Fetcher {
 			return await response.json()
 		} else {
 			const errorMessage = await response.text()
-			return Promise.reject(new Error(`[Fetcher][${url.toString()}]:` + errorMessage))
+			return Promise.reject(new Error(`[Fetcher][${url.toString()}]: ` + errorMessage))
 		}
 	}
 
 	get = async <T>(path: string): Promise<T> => {
-		return this.makeRequest(path, 'get')
+		return this.makeRequest(path, 'GET')
 	}
 
 	post = async <T>(path: string, {body}: FetcherRequestOptions): Promise<T> => {
-		return this.makeRequest(path, 'post', {body})
+		return this.makeRequest(path, 'POST', {body})
 	}
 }
