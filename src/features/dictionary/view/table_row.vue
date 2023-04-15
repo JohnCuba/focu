@@ -1,12 +1,20 @@
 <script setup lang="ts">
 
-defineProps<{
+const props = defineProps<{
 	word: DictionaryWord,
 }>()
+
+const emit = defineEmits<{
+	(e: 'click', value: DictionaryWord): void
+}>()
+
+const handleClick = () => {
+	emit('click', props.word)
+}
 </script>
 
 <template>
-	<tr class="row">
+	<tr class="row" @click="handleClick">
 		<td class="cell word-cell">
 			{{ word.value }}
 		</td>
@@ -20,10 +28,15 @@ defineProps<{
 .row {
 	background-color: var(--color-surface-variant);
 	line-height: 2em;
+	transition: background-color 0.2s ease-in-out,
+							box-shadow 0.2s ease-in-out;
+	border-radius: var(--spacing);
+	box-shadow: var(--elevation-1);
 }
 
 .row:hover {
 	background-color: var(--color-inverse-on-surface);
+	box-shadow: var(--elevation-2);
 }
 
 .cell:first-child {

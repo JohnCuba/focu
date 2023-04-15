@@ -44,7 +44,7 @@ defineExpose({
 	width: calc(100vw - var(--spacing) * 2);
 	display: flex;
 	align-items: stretch;
-	column-gap: var(--spacing);
+	column-gap: calc(var(--spacing) * 2);
 	transition: top 0.6s ease-in-out;
 }
 
@@ -57,6 +57,7 @@ defineExpose({
 	background-color: var(--color-primary-container);
 	padding: calc(var(--spacing) * 3);
 	border-radius: calc(var(--spacing) * 3);
+	box-shadow: var(--elevation-2);
 	overflow: hidden;
 	transition: transform 0.2s ease-in-out;
 	transform: scale(1);

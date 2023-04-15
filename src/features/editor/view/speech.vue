@@ -35,7 +35,7 @@ watchEffect(() => {
 	<button v-if="isSupported" class="button" @click="handleClick">
 		<img
 			src="/img/icons/mic.svg"
-			alt="delete word"
+			alt="toggle speech recognize"
 			width="48"
 			height="48"
 		/>
@@ -49,6 +49,7 @@ watchEffect(() => {
 	cursor: pointer;
 	padding: 0 calc(var(--spacing) * 2.5);
 	border-radius: calc(var(--spacing) * 3);
+	box-shadow: var(--elevation-2);
 	transition: transform 0.2s ease-in-out;
 	transform: scale(1);
 }

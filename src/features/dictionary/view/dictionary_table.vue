@@ -4,6 +4,14 @@ import TableRow from './table_row.vue'
 defineProps<{
 	words: DictionaryWord[]
 }>()
+
+const emit = defineEmits<{
+	(e: 'click:word', value: DictionaryWord): void
+}>()
+
+const handleClickWOrd = (value: DictionaryWord) => {
+	emit('click:word', value)
+}
 </script>
 
 <template>
@@ -19,7 +27,12 @@ defineProps<{
 			</tr>
 		</thead>
 		<tbody>
-			<TableRow v-for="word in words" :key="word.id" :word="word" />
+			<TableRow
+				v-for="word in words"
+				:key="word.id"
+				:word="word"
+				@click="handleClickWOrd"
+			/>
 		</tbody>
 	</table>
 </template>
