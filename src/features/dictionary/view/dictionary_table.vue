@@ -3,27 +3,28 @@ import TableRow from './table_row.vue'
 
 defineProps<{
 	words: DictionaryWord[]
+	selectedWord?: DictionaryWord
 }>()
 
 const emit = defineEmits<{
 	(e: 'click:word', value: DictionaryWord): void
 }>()
 
-const handleClickWOrd = (value: DictionaryWord) => {
+const handleClickWord = (value: DictionaryWord) => {
 	emit('click:word', value)
 }
 </script>
 
 <template>
-	<table class="table">
+	<table class="table is-fullwidth is-striped is-hoverable">
 		<thead>
 			<tr class="row">
-				<td class="cell">
+				<th class="cell">
 					Word
-				</td>
-				<td class="cell">
+				</th>
+				<th class="cell">
 					Translation
-				</td>
+				</th>
 			</tr>
 		</thead>
 		<tbody>
@@ -31,7 +32,8 @@ const handleClickWOrd = (value: DictionaryWord) => {
 				v-for="word in words"
 				:key="word.id"
 				:word="word"
-				@click="handleClickWOrd"
+				:is-selected="selectedWord?.id === word.id"
+				@click="handleClickWord"
 			/>
 		</tbody>
 	</table>
@@ -39,23 +41,7 @@ const handleClickWOrd = (value: DictionaryWord) => {
 
 <style scoped>
 .table {
-	width: 100%;
-	background-color: var(--color-surface);
-	padding: var(--spacing);
-	border-radius: var(--spacing);
+	padding: calc(var(--spacing) * 2);
 	border-collapse: separate;
-	border-spacing: 0 var(--spacing);
-}
-
-.cell {
-	border-bottom: 1px solid var(--color-outline);
-}
-
-.cell:first-child {
-	padding-left: calc(var(--spacing) * 2);
-}
-
-.cell:not(:last-child) {
-	border-right: 1px solid var(--color-outline);
 }
 </style>

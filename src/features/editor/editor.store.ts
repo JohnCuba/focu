@@ -8,16 +8,19 @@ export const useEditorStore = defineStore('editor', () => {
 	const dictionaryStore = inject(DICTIONARY_STORE_INJECTION)
 
 	const value = ref('')
+	const isLoading = ref(false)
 
-	function submitWord() {
+	async function submitWord() {
+		isLoading.value = true
 		const word = value.value
 
 		if (!word) return
 
-		_reset()
-		dictionaryStore?.setWord({
+		await dictionaryStore?.setWord({
 			value: word
 		})
+		_reset()
+		isLoading.value = false
 	}
 
 	function _reset() {
@@ -26,6 +29,7 @@ export const useEditorStore = defineStore('editor', () => {
 
 	return {
 		value,
+		isLoading,
 		submitWord
 	}
 })

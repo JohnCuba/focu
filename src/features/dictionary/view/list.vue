@@ -1,4 +1,5 @@
 <script setup lang="ts">
+// TODO: Will be refactored
 import { storeToRefs } from 'pinia'
 import { useDictionaryStore } from '../dictionary.store'
 import ListItem from './list_item.vue'

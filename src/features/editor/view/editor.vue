@@ -12,9 +12,12 @@ export type EditorViewExpose = {
 const elementRef = ref<HTMLDivElement>()
 
 const editorStore = useEditorStore()
-const {value} = storeToRefs(editorStore)
+const {value, isLoading} = storeToRefs(editorStore)
 const {submitWord} = editorStore
 const componentHeight = computed(() => elementRef.value?.offsetHeight || 0)
+const controlClasses = computed(() => ({
+	'is-loading': isLoading.value,
+}))
 
 const {isHidden} = useHideOnScroll({offset: componentHeight})
 
@@ -25,11 +28,13 @@ defineExpose({
 
 <template>
 	<div ref="elementRef" class="root" :class="{'root--hidden': isHidden}">
-		<div class="text-input">
+		<div class="input-wrapper control is-large" :class="controlClasses">
 			<input
 				v-model="value"
-				class="control"
+				type="text"
+				class="input is-large is-rounded is-primary"
 				placeholder="Type something..."
+				:disabled="isLoading"
 				@keypress.enter="submitWord"
 			/>
 		</div>
@@ -41,7 +46,8 @@ defineExpose({
 .root {
 	position: fixed;
 	top: var(--spacing);
-	width: calc(100vw - var(--spacing) * 2);
+	width: 100%;
+	padding: 0 calc(var(--spacing) * 2);
 	display: flex;
 	align-items: stretch;
 	column-gap: calc(var(--spacing) * 2);
@@ -52,32 +58,11 @@ defineExpose({
 	top: -100px;
 }
 
-.text-input {
-	flex: 1;
-	background-color: var(--color-primary-container);
-	padding: calc(var(--spacing) * 3);
-	border-radius: calc(var(--spacing) * 3);
-	box-shadow: var(--elevation-2);
-	overflow: hidden;
-	transition: transform 0.2s ease-in-out;
-	transform: scale(1);
-}
-
-.text-input:hover {
-	transform: scale(1.002);
-}
-
-.control {
+.input-wrapper {
 	width: 100%;
-	background-color: transparent;
-	color: var(--color-on-tertiary-container);
-	border: none;
-	outline: none;
-	font-size: 2em;
-	font-weight: 600;
 }
-
-.control::placeholder {
-	color: var(--color-outline);
+.input-wrapper.is-loading::after {
+	top: 0.75em;
+	right: 0.75em;
 }
 </style>

@@ -15,9 +15,8 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.13.0",
+    "bulma": "^0.9.4",
     "pinia": "^2.0.34",
-    "reflect-metadata": "^0.1.13",
-    "tsyringe": "^4.7.0",
     "vue": "^3.2.47",
     "vue-router": "^4.1.6"
   },
@@ -30,6 +29,8 @@
     "eslint": "^8.38.0",
     "eslint-plugin-vue": "^9.10.0",
     "fake-indexeddb": "^4.0.1",
+    "reflect-metadata": "^0.1.13",
+    "tsyringe": "^4.7.0",
     "typescript": "^5.0.4",
     "vite": "^4.2.0",
     "vite-plugin-pages": "^0.29.0",
