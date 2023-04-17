@@ -1,15 +1,15 @@
-import { SUPPORTED_PAIRS } from '~/config/app/langs'
-
 export class LocalDatabase {
 	private _database!: IDBDatabase
 	get database() {return this._database}
 
 	private name!: string
 	private version!: number
+	private storeKeys!: string[]
 
-	constructor(name: string, version: number) {
+	constructor(name: string, version: number, storeKeys: string[]) {
 		this.name = name
 		this.version = version
+		this.storeKeys = storeKeys
 	}
 
 	initDb() {
@@ -48,12 +48,12 @@ export class LocalDatabase {
 			this._database = request.result
 		}
 
-		Object.keys(SUPPORTED_PAIRS).forEach((key) => {
+		this.storeKeys.forEach((key) => {
 			this.database.createObjectStore(key, {keyPath: 'id', autoIncrement: true})
 		})
 	}
 
-	makeGetAllTransaction = async <T>(storeKey: keyof typeof SUPPORTED_PAIRS): Promise<T[]> => {
+	makeGetAllTransaction = async <T>(storeKey: string): Promise<T[]> => {
 		await this.initDb()
 		return new Promise((resolve, reject) => {
 			const transaction = this.database.transaction(storeKey, 'readonly')
@@ -67,7 +67,7 @@ export class LocalDatabase {
 	}
 
 	makeAddTransaction = async <T>(
-		storeKey: keyof typeof SUPPORTED_PAIRS,
+		storeKey: string,
 		data: Omit<T, 'id'>,
 	): Promise<Omit<T, 'id'> & {id: number}> => {
 		await this.initDb()
@@ -82,7 +82,7 @@ export class LocalDatabase {
 		})
 	}
 
-	makeDeleteTransaction = async (storeKey: keyof typeof SUPPORTED_PAIRS, recordKey: number): Promise<number> => {
+	makeDeleteTransaction = async (storeKey: string, recordKey: number): Promise<number> => {
 		await this.initDb()
 		return new Promise((resolve, reject) => {
 			const transaction = this.database.transaction(storeKey, 'readwrite')
