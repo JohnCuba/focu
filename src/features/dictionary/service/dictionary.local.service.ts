@@ -1,13 +1,13 @@
-import { SUPPORTED_PAIRS } from '~/config/app/langs'
+import { type SupportedPairs } from '~/config/app/langs'
 import { LocalDatabase } from '~/lib/local_database'
 
 export class DictionaryLocalService {
 	private dbInstance!: LocalDatabase
 	private dbName = 'dictionaries'
 	private dbVersion = 1
-	private dbStoreKey!: keyof typeof SUPPORTED_PAIRS
+	private dbStoreKey!: SupportedPairs
 
-	constructor(storeKey: keyof typeof SUPPORTED_PAIRS) {
+	constructor(storeKey: SupportedPairs) {
 		this.dbStoreKey = storeKey
 		this.dbInstance = new LocalDatabase(this.dbName, this.dbVersion)
 		this.dbInstance.initDb()

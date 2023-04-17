@@ -1,13 +1,12 @@
+import { type SupportedLangPair } from '~/config/app/langs'
 import { Fetcher } from '~/lib/fetcher'
 
 export class TranslatorApiService {
 	private fetcher!: Fetcher
-	private source!: string
-	private target!: string
+	private langPair!: SupportedLangPair
 
-	constructor(source: string, target: string) {
-		this.source = source
-		this.target = target
+	constructor(langPair: SupportedLangPair) {
+		this.langPair = langPair
 		this.fetcher = new Fetcher({
 			host: 'https://translate.argosopentech.com/'
 		})
@@ -19,8 +18,8 @@ export class TranslatorApiService {
 			{
 				body: {
 					q,
-					source: this.source,
-					target: this.target,
+					source: this.langPair.source,
+					target: this.langPair.target,
 				}
 			}
 		).then((data) => data.translatedText)

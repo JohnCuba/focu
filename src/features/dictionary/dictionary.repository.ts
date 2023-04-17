@@ -1,14 +1,16 @@
-import { SUPPORTED_PAIRS } from '~/config/app/langs'
+import { SUPPORTED_PAIRS, type SupportedLangPair, type SupportedPairs } from '~/config/app/langs'
 import { TranslatorApiService } from './service/translator.api.service'
 import { DictionaryLocalService } from './service/dictionary.local.service'
 
 export class DictionaryRepository {
 	private localService!: DictionaryLocalService
 	private translationService!: TranslatorApiService
+	private langPair!: SupportedLangPair
 
-	constructor(key: keyof typeof SUPPORTED_PAIRS = 'en-ru') {
+	constructor(key: SupportedPairs = 'en-ru') {
+		this.langPair = SUPPORTED_PAIRS[key]
 		this.localService = new DictionaryLocalService(key)
-		this.translationService = new TranslatorApiService('en', 'ru')
+		this.translationService = new TranslatorApiService(this.langPair)
 	}
 
 	getAll() {
