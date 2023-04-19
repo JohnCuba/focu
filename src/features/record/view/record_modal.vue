@@ -1,4 +1,7 @@
 <script setup lang="ts">
+import {watch} from 'vue'
+import { useScrollLock } from '@vueuse/core'
+
 const props = defineProps<{
 	word?: DictionaryWord
 }>()
@@ -7,6 +10,8 @@ const emit = defineEmits<{
 	(e: 'click:background'): void
 	(e: 'click:remove', value: DictionaryWord): void
 }>()
+
+const isLocked = useScrollLock(document.body)
 
 const handleClickBackground = () => {
 	emit('click:background')
@@ -17,36 +22,32 @@ const handleClickRemove = () => {
 
 	emit('click:remove', props.word)
 }
+
+watch(
+	() => Boolean(props.word),
+	(isModalOpen) => {
+		isLocked.value = isModalOpen
+	}
+)
 </script>
 
 <template>
 	<Transition name="modal">
-		<div v-if="word" class="modal is-active">
-			<div class="modal-background" @click.self="handleClickBackground" />
-			<div class="modal-content">
-				<div class="box">
-					<div class="level">
-						<div class="level-left">
-							<h1 class="level-item title">
-								{{ word.value }}
-							</h1>
-						</div>
-						<div class="level-right">
-							<button class="level-item button is-danger is-light" @click="handleClickRemove">
-								<span class="icon">
-									<img
-										src="/img/icons/delete_forever.svg"
-										alt="delete word"
-										width="24"
-										height="24"
-									/>
-								</span>
-							</button>
-						</div>
-					</div>
-					<p class="subtitle">
+		<div v-if="word" class="fixed top-0 left-0 w-full h-full z-20 flex justify-center items-center">
+			<div class="bg-neutral/[.4] w-full h-full" @click.self="handleClickBackground" />
+			<div class="absolute card lg:w-96 w-11/12 bg-base-100 shadow-xl">
+				<div class="card-body">
+					<h1 class="card-title">
+						{{ word.value }}
+					</h1>
+					<p>
 						{{ word.translation }}
 					</p>
+					<div class="card-actions justify-end">
+						<button class="delete-btn btn btn-xs btn-outline btn-error" @click="handleClickRemove">
+							удалить
+						</button>
+					</div>
 				</div>
 			</div>
 		</div>

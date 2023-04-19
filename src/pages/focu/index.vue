@@ -21,9 +21,9 @@ onMounted(() => {
 </script>
 
 <template>
-	<main class="main">
+	<main class="main relative container mx-auto">
 		<Editor ref="editorRef" />
-		<section :style="dictionaryStyle">
+		<section class="p-2" :style="dictionaryStyle">
 			<Dictionary />
 		</section>
 	</main>
@@ -31,10 +31,6 @@ onMounted(() => {
 
 <style scoped>
 .main {
-	position: relative;
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
 	row-gap: calc(var(--spacing) * 2);
 }
 

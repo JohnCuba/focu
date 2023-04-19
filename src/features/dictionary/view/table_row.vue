@@ -15,7 +15,7 @@ const handleClick = () => {
 </script>
 
 <template>
-	<tr :class="{'is-selected': isSelected}" @click="handleClick">
+	<tr class="hover" :class="{'active': isSelected}" @click="handleClick">
 		<td>
 			{{ word.value }}
 		</td>

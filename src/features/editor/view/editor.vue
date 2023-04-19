@@ -15,9 +15,6 @@ const editorStore = useEditorStore()
 const {value, isLoading} = storeToRefs(editorStore)
 const {submitWord} = editorStore
 const componentHeight = computed(() => elementRef.value?.offsetHeight || 0)
-const controlClasses = computed(() => ({
-	'is-loading': isLoading.value,
-}))
 
 const {isHidden} = useHideOnScroll({offset: componentHeight})
 
@@ -27,42 +24,23 @@ defineExpose({
 </script>
 
 <template>
-	<div ref="elementRef" class="root" :class="{'root--hidden': isHidden}">
-		<div class="input-wrapper control is-large" :class="controlClasses">
-			<input
-				v-model="value"
-				type="text"
-				class="input is-large is-rounded is-primary"
-				placeholder="Type something..."
-				:disabled="isLoading"
-				@keypress.enter="submitWord"
-			/>
-		</div>
-		<Speech v-model="value" />
+	<div ref="elementRef" class="root z-20 fixed -top-28 flex gap-x-2 w-full p-2" :class="{'top-1': !isHidden}">
+		<input
+			v-model="value"
+			type="text"
+			class="input input-bordered input-success flex-1"
+			placeholder="Type something..."
+			:disabled="isLoading"
+			@keypress.enter="submitWord"
+		/>
+		<Speech v-model="value" :disabled="isLoading" />
 	</div>
 </template>
 
 <style scoped>
 .root {
-	position: fixed;
-	top: var(--spacing);
-	width: 100%;
-	padding: 0 calc(var(--spacing) * 2);
-	display: flex;
-	align-items: stretch;
-	column-gap: calc(var(--spacing) * 2);
+	max-width: inherit;
+	/* TODO: replace it with tailwinds's transform */
 	transition: top 0.6s ease-in-out;
-}
-
-.root--hidden {
-	top: -100px;
-}
-
-.input-wrapper {
-	width: 100%;
-}
-.input-wrapper.is-loading::after {
-	top: 0.75em;
-	right: 0.75em;
 }
 </style>

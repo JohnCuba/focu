@@ -14,10 +14,10 @@ const {
 	start,
 	stop,
 } = useSpeechRecognition()
+
 const iconSrc = computed(() => `/img/icons/${isListening.value ? 'voice_recording' : 'mic'}.svg`)
 const buttonClasses = computed(() => ({
-	'is-primary': !isListening.value,
-	'is-warning': isListening.value,
+	'btn-active': isListening.value,
 }))
 
 const handleClick = () => {
@@ -39,17 +39,15 @@ watchEffect(() => {
 <template>
 	<button
 		v-if="isSupported"
-		class="button is-large is-rounded is-primary is-light"
+		class="btn btn-success btn-square"
 		:class="buttonClasses"
 		@click="handleClick"
 	>
-		<span class="icon is-medium">
-			<img
-				:src="iconSrc"
-				alt="toggle speech recognize"
-				width="48"
-				height="48"
-			/>
-		</span>
+		<img
+			:src="iconSrc"
+			alt="toggle speech recognize"
+			width="32"
+			height="32"
+		/>
 	</button>
 </template>

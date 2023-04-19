@@ -23,7 +23,7 @@ const checkIsSameDate = (a: number, b?: number) => {
 </script>
 
 <template>
-	<table class="table is-fullwidth is-striped is-hoverable">
+	<table class="table table-zebra w-full p-2">
 		<thead>
 			<tr>
 				<th>Word</th>
@@ -45,10 +45,3 @@ const checkIsSameDate = (a: number, b?: number) => {
 		</tbody>
 	</table>
 </template>
-
-<style scoped>
-.table {
-	padding: calc(var(--spacing) * 2);
-	border-collapse: separate;
-}
-</style>
