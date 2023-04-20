@@ -15,7 +15,7 @@ const {
 	stop,
 } = useSpeechRecognition()
 
-const iconSrc = computed(() => `/img/icons/${isListening.value ? 'voice_recording' : 'mic'}.svg`)
+const iconSrc = computed(() => `/focu/img/icons/${isListening.value ? 'voice_recording' : 'mic'}.svg`)
 const buttonClasses = computed(() => ({
 	'btn-active': isListening.value,
 }))
