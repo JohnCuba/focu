@@ -21,7 +21,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<main class="main bg-base-200">
+	<main class="main min-h-screen bg-base-200">
 		<div class="relative container mx-auto">
 			<section class="p-2" :style="dictionaryStyle">
 				<Dictionary />
