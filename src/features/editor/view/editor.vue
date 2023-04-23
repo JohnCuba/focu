@@ -24,7 +24,11 @@ defineExpose({
 </script>
 
 <template>
-	<div ref="elementRef" class="root navbar z-20 fixed -top-28 gap-x-2" :class="{'top-1': !isHidden}">
+	<div
+		ref="elementRef"
+		class="root navbar bg-base-100 rounded-xl z-20 fixed -bottom-28 gap-x-2"
+		:class="{'bottom-1': !isHidden}"
+	>
 		<input
 			v-model="value"
 			type="text"
@@ -41,6 +45,6 @@ defineExpose({
 .root {
 	max-width: inherit;
 	/* TODO: replace it with tailwinds's transform */
-	transition: top 0.6s ease-in-out;
+	transition: bottom 0.6s ease-in-out;
 }
 </style>

@@ -5,12 +5,13 @@ export const useHideOnScroll = ({
 	element = document,
 	offset,
 }: Props = defaultProps) => {
-	const {directions, y} = useScroll(element, {behavior: 'smooth'})
+	const {directions, y, arrivedState} = useScroll(element, {behavior: 'smooth'})
+	const {bottom: isBottomArrived, top: isTopArrived} = toRefs(arrivedState)
 	const {top: toTop, bottom: toBottom} = toRefs(directions)
 	const isHidden = ref(false)
 
 	watchEffect(() => {
-		if (toTop.value) {
+		if (toTop.value || isBottomArrived.value || isTopArrived.value) {
 			isHidden.value = false
 		} else if ((y.value > (offset?.value ?? 0)) && toBottom.value) {
 			isHidden.value = true

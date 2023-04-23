@@ -32,7 +32,6 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		} finally {
 			_editWordInStore({...resultWord, isLoadTranslation: false})
 		}
-
 	}
 
 	const removeWord = async (wordId: number) => {

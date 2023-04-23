@@ -12,7 +12,7 @@ provide(DICTIONARY_STORE_INJECTION, dictionaryStore)
 
 const editorRef = ref<EditorViewExpose>()
 const dictionaryStyle = computed(() => ({
-	'margin-top': `calc(${editorRef.value?.elementRef.offsetHeight}px + var(--spacing))`
+	'padding-bottom': `calc(${editorRef.value?.elementRef.offsetHeight}px + var(--spacing))`
 }))
 
 onMounted(() => {
@@ -21,11 +21,13 @@ onMounted(() => {
 </script>
 
 <template>
-	<main class="main relative container mx-auto">
-		<Editor ref="editorRef" />
-		<section class="p-2" :style="dictionaryStyle">
-			<Dictionary />
-		</section>
+	<main class="main bg-base-200">
+		<div class="relative container mx-auto">
+			<section class="p-2" :style="dictionaryStyle">
+				<Dictionary />
+			</section>
+			<Editor ref="editorRef" />
+		</div>
 	</main>
 </template>
 
