@@ -1,1 +1,1 @@
-export const THEMES = ['cupcake', 'aqua'] as const
+export const THEMES = ['pastel', 'aqua'] as const
