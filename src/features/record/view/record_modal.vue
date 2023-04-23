@@ -33,7 +33,7 @@ watch(
 
 <template>
 	<Transition name="modal">
-		<div v-if="word" class="fixed top-0 left-0 w-full h-full z-20 flex justify-center items-center">
+		<div v-if="word" class="fixed top-0 left-0 w-full h-full z-30 flex justify-center items-center">
 			<div class="bg-neutral/[.4] w-full h-full" @click.self="handleClickBackground" />
 			<div class="absolute card lg:w-96 w-11/12 bg-base-100 shadow-xl">
 				<div class="card-body">
