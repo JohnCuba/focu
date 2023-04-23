@@ -24,7 +24,7 @@ defineExpose({
 </script>
 
 <template>
-	<div ref="elementRef" class="root z-20 fixed -top-28 flex gap-x-2 w-full p-2" :class="{'top-1': !isHidden}">
+	<div ref="elementRef" class="root navbar z-20 fixed -top-28 gap-x-2" :class="{'top-1': !isHidden}">
 		<input
 			v-model="value"
 			type="text"

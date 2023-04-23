@@ -21,6 +21,7 @@ const handleClick = () => {
 		</td>
 		<td class="cell">
 			{{ word.translation }}
+			<progress v-if="word.isLoadTranslation" class="progress"></progress>
 		</td>
 	</tr>
 </template>

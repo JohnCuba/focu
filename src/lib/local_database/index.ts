@@ -94,4 +94,17 @@ export class LocalDatabase {
 			request.onerror = () => reject(`[LocalDatabase][${storeKey}]: Unable to delete ${recordKey}`)
 		})
 	}
+
+	makeEditTransaction = async <T extends {id: number}>(storeKey: string, data: T): Promise<T> => {
+		await this.initDb()
+		return new Promise((resolve, reject) => {
+			const transaction = this.database.transaction(storeKey, 'readwrite')
+			const store = transaction.objectStore(storeKey)
+
+			const request = store.put(data, data.id) as IDBRequest<number>
+
+			request.onsuccess = () => resolve(data)
+			request.onerror = () => reject(`[LocalDatabase][${storeKey}]: Unable to edit ${request.result}`)
+		})
+	}
 }

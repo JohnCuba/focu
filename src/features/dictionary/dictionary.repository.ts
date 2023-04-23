@@ -18,18 +18,25 @@ export class DictionaryRepository {
 	}
 
 	async addWord(word: Omit<DictionaryWord, 'id' | 'translation' | 'dateAdd'>) {
-		const translated = await this.translationService.getTranslation(word.value)
-
 		return this.localService.addWord(
 			{
 				...word,
-				translation: translated,
+				translation: '',
 				dateAdd: Date.now()
 			}
 		)
 	}
 
-	deleteWord(id: number) {
+	async updateWordTranslation(word: DictionaryWord) {
+		const translated = await this.translationService.getTranslation(word.value)
+
+		return this.localService.editWord({
+			...word,
+			translation: translated
+		})
+	}
+
+	async deleteWord(id: number) {
 		return this.localService.deleteWord(id)
 	}
 }

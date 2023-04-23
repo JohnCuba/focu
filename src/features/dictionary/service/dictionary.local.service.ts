@@ -28,4 +28,8 @@ export class DictionaryLocalService {
 	deleteWord(id: DictionaryWord['id']) {
 		return this.dbInstance.makeDeleteTransaction(this.dbStoreKey, id)
 	}
+
+	editWord(data: DictionaryWord) {
+		return this.dbInstance.makeEditTransaction(this.dbStoreKey, data)
+	}
 }

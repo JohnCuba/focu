@@ -16,7 +16,7 @@ export const useEditorStore = defineStore('editor', () => {
 
 		if (!word) return
 
-		await dictionaryStore?.setWord({
+		await dictionaryStore?.addWord({
 			value: word
 		})
 		_reset()

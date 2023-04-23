@@ -8,12 +8,31 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 	const repository = new DictionaryRepository()
 	const words = ref<DictionaryWord[]>([])
 
-	const setWord = async ({value}: {value: DictionaryWord['value']}) => {
-		const newWordRaw = {
-			value,
-		}
+	const _editWordInStore = (editedWord: DictionaryWord) => {
+		words.value = words.value.map((word) => editedWord.id === word.id ? editedWord : word)
+	}
+
+	const addWord = async ({value}: {value: DictionaryWord['value']}) => {
+		const newWordRaw = {value}
+
 		const newWord = await repository.addWord(newWordRaw)
+
 		words.value = [newWord, ...words.value]
+
+		updateWordTranslation(newWord)
+	}
+
+	const updateWordTranslation = async (word: DictionaryWord) => {
+		_editWordInStore({ ...word, isLoadTranslation: true})
+
+		let resultWord = word
+
+		try {
+			resultWord = await repository.updateWordTranslation(word)
+		} finally {
+			_editWordInStore({...resultWord, isLoadTranslation: false})
+		}
+
 	}
 
 	const removeWord = async (wordId: number) => {
@@ -27,8 +46,9 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 
 	return {
 		words,
-		setWord,
+		addWord,
 		removeWord,
-		fetchWords
+		fetchWords,
+		updateWordTranslation
 	}
 })

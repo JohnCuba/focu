@@ -3,4 +3,5 @@ type DictionaryWord = {
 	dateAdd: number
 	value: string
 	translation: string
+	isLoadTranslation?: boolean
 }
