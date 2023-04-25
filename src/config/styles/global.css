@@ -16,3 +16,13 @@
 	box-sizing: border-box;
 	transition: all 0.3s ease-in-out;
 }
+
+body {
+  height: 100vh;
+	height: -webkit-fill-available;
+  height: calc(var(--vh, 1vh) * 100);
+}
+
+#app {
+	height: 100%;
+}

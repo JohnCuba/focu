@@ -32,6 +32,7 @@ defineExpose({
 		<input
 			v-model="value"
 			type="text"
+			autocomplete="off"
 			class="input input-bordered input-success flex-1"
 			placeholder="Type something..."
 			:disabled="isLoading"
