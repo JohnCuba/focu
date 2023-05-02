@@ -27,5 +27,5 @@ const handleRemoveWord = (word: DictionaryWord) => {
 
 <template>
 	<DictionaryTable :words="words" :selected-word="selectedWord" @click:word="handleSelectWord" />
-	<RecordModal :word="selectedWord" @click:background="handleCloseModal" @click:remove="handleRemoveWord" />
+	<RecordModal :word="selectedWord" @click:close="handleCloseModal" @click:remove="handleRemoveWord" />
 </template>
