@@ -101,9 +101,9 @@ export class LocalDatabase {
 			const transaction = this.database.transaction(storeKey, 'readwrite')
 			const store = transaction.objectStore(storeKey)
 
-			const request = store.put(data, data.id) as IDBRequest<number>
+			const request = store.put(data) as IDBRequest<number>
 
-			request.onsuccess = () => resolve(data)
+			request.onsuccess = () => resolve({...data, id: request.result})
 			request.onerror = () => reject(`[LocalDatabase][${storeKey}]: Unable to edit ${request.result}`)
 		})
 	}

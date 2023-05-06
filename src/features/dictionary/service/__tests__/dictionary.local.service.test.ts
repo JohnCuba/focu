@@ -7,6 +7,7 @@ vi.mock('~/lib/local_database', () => {
 	LocalDatabase.prototype.makeGetAllTransaction = vi.fn()
 	LocalDatabase.prototype.makeAddTransaction = vi.fn()
 	LocalDatabase.prototype.makeDeleteTransaction = vi.fn()
+	LocalDatabase.prototype.makeEditTransaction = vi.fn()
 
 	return {LocalDatabase}
 })
@@ -48,5 +49,16 @@ describe('DictionaryLocalService', () => {
 
 		expect(spy).toHaveBeenCalledTimes(1)
 		expect(spy).toBeCalledWith('en-ru', mockWordId)
+	})
+
+	it('should call database transaction on editWord', () => {
+		const instance = new DictionaryLocalService('en-ru')
+    const spy = vi.spyOn(instance['dbInstance'], 'makeEditTransaction')
+		const mockWord = { id: 11, value: 'test_value', translation: 'test_trans', dateAdd: 12345 }
+
+		instance.editWord(mockWord)
+
+		expect(spy).toHaveBeenCalledTimes(1)
+		expect(spy).toBeCalledWith('en-ru', mockWord)
 	})
 })

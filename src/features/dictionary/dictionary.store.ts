@@ -39,6 +39,18 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		words.value = words.value.filter(({id}) => id !== deletedId)
 	}
 
+	const modifyWord = async (word: DictionaryWord) => {
+		_editWordInStore({ ...word, isLoadTranslation: true})
+
+		let resultWord = word
+
+		try {
+			resultWord = await repository.modifyWord(word)
+		} finally {
+			_editWordInStore({...resultWord, isLoadTranslation: false})
+		}
+	}
+
 	const fetchWords = async () => {
 		words.value = await repository.getAll().then((dictionary) => dictionary.reverse())
 	}
@@ -48,6 +60,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		addWord,
 		removeWord,
 		fetchWords,
-		updateWordTranslation
+		updateWordTranslation,
+		modifyWord
 	}
 })

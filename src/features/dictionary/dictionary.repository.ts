@@ -36,6 +36,10 @@ export class DictionaryRepository {
 		})
 	}
 
+	modifyWord(word: DictionaryWord) {
+		return this.localService.editWord(word)
+	}
+
 	async deleteWord(id: number) {
 		return this.localService.deleteWord(id)
 	}

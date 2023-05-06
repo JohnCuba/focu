@@ -7,7 +7,7 @@ import { RecordModal } from '~/features/record'
 
 const dictionaryStore = useDictionaryStore()
 const {words} = storeToRefs(dictionaryStore)
-const {removeWord} = dictionaryStore
+const {removeWord, modifyWord} = dictionaryStore
 
 const selectedWord = ref<DictionaryWord | undefined>()
 
@@ -23,9 +23,18 @@ const handleRemoveWord = (word: DictionaryWord) => {
 	removeWord(word.id)
 	handleCloseModal()
 }
+
+const handleSaveWord = (word: DictionaryWord) => {
+	modifyWord(word)
+}
 </script>
 
 <template>
 	<DictionaryTable :words="words" :selected-word="selectedWord" @click:word="handleSelectWord" />
-	<RecordModal :word="selectedWord" @click:close="handleCloseModal" @click:remove="handleRemoveWord" />
+	<RecordModal
+		:word="selectedWord"
+		@click:close="handleCloseModal"
+		@click:remove="handleRemoveWord"
+		@click:save="handleSaveWord"
+	/>
 </template>
