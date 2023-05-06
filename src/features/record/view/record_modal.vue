@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {useToggle} from '@vueuse/core'
 import {Modal} from '~/lib/view/modal'
+import {DeleteForeverIcon} from '~/lib/view/icons'
 
 const props = defineProps<{
 	word?: DictionaryWord
@@ -51,8 +52,8 @@ const handleClickSave = (e: Event) => {
 				{{ word?.translation }}
 			</p>
 			<div class="card-actions justify-end mt-2">
-				<button class="btn btn-sm btn-outline btn-error" @click="handleClickRemove">
-					удалить
+				<button class="btn btn-sm btn-outline btn-error fill-error hover:fill-info-content" @click="handleClickRemove">
+					<DeleteForeverIcon class="w-5 h-5" />
 				</button>
 				<button class="btn btn-sm btn-outline btn-info" @click="toggleMode(true)">
 					редактировать
