@@ -6,7 +6,7 @@ import DictionaryTable from './dictionary_table.vue'
 import { RecordModal } from '~/features/record'
 
 const dictionaryStore = useDictionaryStore()
-const {words} = storeToRefs(dictionaryStore)
+const {wordsToShow} = storeToRefs(dictionaryStore)
 const {removeWord, modifyWord, getWordTranslation} = dictionaryStore
 
 const selectedWord = ref<DictionaryWord | undefined>()
@@ -59,7 +59,7 @@ const handleUpdateTranslation = (word: DictionaryWord) => {
 </script>
 
 <template>
-	<DictionaryTable :words="words" :selected-word="selectedWord" @click:word="handleSelectWord" />
+	<DictionaryTable :words="wordsToShow" :selected-word="selectedWord" @click:word="handleSelectWord" />
 	<RecordModal
 		:word="selectedWord"
 		@click:close="handleCloseModal"

@@ -1,12 +1,25 @@
 import { defineStore } from 'pinia'
-import { type InjectionKey, ref } from 'vue'
+import { type InjectionKey, ref, computed } from 'vue'
 import { DictionaryRepository } from './dictionary.repository'
+import { useFilter } from '~/lib/hooks/useFilter'
 
 export const DICTIONARY_STORE_INJECTION: InjectionKey<ReturnType<typeof useDictionaryStore>> = Symbol('dictionary-store')
 
 export const useDictionaryStore = defineStore('dictionary', () => {
 	const repository = new DictionaryRepository()
 	const words = ref<DictionaryWord[]>([])
+	const {
+		result: wordsToShow,
+		filterValues,
+		setFilterValue,
+	} = useFilter<DictionaryWord>(
+		words,
+		{
+			value: (entity, value) => {
+				return entity.value.includes(value as string)
+			},
+		}
+	)
 
 	const _editWordInStore = (editedWord: DictionaryWord) => {
 		words.value = words.value.map((word) => editedWord.id === word.id ? editedWord : word)
@@ -61,11 +74,14 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 
 	return {
 		words,
+		wordsToShow,
+		filterValues,
 		addWord,
 		removeWord,
 		fetchWords,
 		updateWordTranslation,
 		modifyWord,
-		getWordTranslation
+		getWordTranslation,
+		setFilterValue
 	}
 })
