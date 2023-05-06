@@ -13,11 +13,15 @@ export class DictionaryRepository {
 		this.translationService = new TranslatorApiService(this.langPair)
 	}
 
+	fetchTranslation(word: DictionaryWord) {
+		return this.translationService.getTranslation(word.value)
+	}
+
 	getAll() {
 		return this.localService.getDictionary()
 	}
 
-	async addWord(word: Omit<DictionaryWord, 'id' | 'translation' | 'dateAdd'>) {
+	addWord(word: Omit<DictionaryWord, 'id' | 'translation' | 'dateAdd'>) {
 		return this.localService.addWord(
 			{
 				...word,
@@ -28,7 +32,7 @@ export class DictionaryRepository {
 	}
 
 	async updateWordTranslation(word: DictionaryWord) {
-		const translated = await this.translationService.getTranslation(word.value)
+		const translated = await this.fetchTranslation(word)
 
 		return this.localService.editWord({
 			...word,
@@ -40,7 +44,7 @@ export class DictionaryRepository {
 		return this.localService.editWord(word)
 	}
 
-	async deleteWord(id: number) {
+	deleteWord(id: number) {
 		return this.localService.deleteWord(id)
 	}
 }

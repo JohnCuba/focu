@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import {useToggle} from '@vueuse/core'
 import {Modal} from '~/lib/view/modal'
-import {DeleteForeverIcon} from '~/lib/view/icons'
+import {DeleteForeverIcon, TranslationIcon} from '~/lib/view/icons'
 
 const props = defineProps<{
 	word?: DictionaryWord
@@ -11,6 +11,7 @@ const emit = defineEmits<{
 	(e: 'click:close'): void
 	(e: 'click:remove', value: DictionaryWord): void
 	(e: 'click:save', value: DictionaryWord): void
+	(e: 'click:update-translation', value: DictionaryWord): void
 }>()
 
 const [isEditMode, toggleMode] = useToggle(false)
@@ -39,6 +40,12 @@ const handleClickSave = (e: Event) => {
 	emit('click:save', editedWord)
 	toggleMode(false)
 }
+
+const handleClickUpdateTranslation = () => {
+	if (!props.word) return
+
+	emit('click:update-translation', props.word)
+}
 </script>
 
 <template>
@@ -63,7 +70,19 @@ const handleClickSave = (e: Event) => {
 		<!-- EDIT MODE -->
 		<form v-if="isEditMode" class="card-body gap-y-4" @submit.prevent="handleClickSave">
 			<input class="input input-sm input-bordered input-info" name="value" :value="word?.value" />
-			<input class="input input-sm input-bordered input-info" name="translation" :value="word?.translation" />
+			<div class="form-control">
+				<div class="input-group">
+					<input class="input input-sm input-bordered input-info w-full" name="translation" :value="word?.translation" />
+					<button
+						class="btn btn-sm btn-square fill-info-content hover:fill-info"
+						:class="{'loading': word?.isLoadTranslation}"
+						:disabled="word?.isLoadTranslation"
+						@click.prevent="handleClickUpdateTranslation"
+					>
+						<TranslationIcon v-if="!word?.isLoadTranslation" class="w-4 h-4" />
+					</button>
+				</div>
+			</div>
 			<div class="card-actions justify-end mt-2">
 				<button class="btn btn-sm btn-outline btn-error" @click="toggleMode(false)">
 					отмена

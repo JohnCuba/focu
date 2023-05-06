@@ -22,6 +22,10 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		updateWordTranslation(newWord)
 	}
 
+	const getWordTranslation = (word: DictionaryWord) => {
+		return repository.fetchTranslation(word)
+	}
+
 	const updateWordTranslation = async (word: DictionaryWord) => {
 		_editWordInStore({ ...word, isLoadTranslation: true})
 
@@ -61,6 +65,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		removeWord,
 		fetchWords,
 		updateWordTranslation,
-		modifyWord
+		modifyWord,
+		getWordTranslation
 	}
 })

@@ -7,7 +7,7 @@ import { RecordModal } from '~/features/record'
 
 const dictionaryStore = useDictionaryStore()
 const {words} = storeToRefs(dictionaryStore)
-const {removeWord, modifyWord} = dictionaryStore
+const {removeWord, modifyWord, getWordTranslation} = dictionaryStore
 
 const selectedWord = ref<DictionaryWord | undefined>()
 
@@ -28,6 +28,34 @@ const handleSaveWord = (word: DictionaryWord) => {
 	modifyWord(word)
 	handleCloseModal()
 }
+
+const handleUpdateTranslation = (word: DictionaryWord) => {
+	if (!selectedWord.value) return
+
+	selectedWord.value = {
+		...selectedWord.value,
+		isLoadTranslation: true,
+	}
+
+	getWordTranslation(word)
+		.then((translation) => {
+			if (!selectedWord.value) return
+
+			selectedWord.value = {
+				...selectedWord.value,
+				translation,
+				isLoadTranslation: false,
+			}
+		})
+		.finally(() => {
+			if (!selectedWord.value) return
+
+			selectedWord.value = {
+				...selectedWord.value,
+				isLoadTranslation: false,
+			}
+		})
+}
 </script>
 
 <template>
@@ -37,5 +65,6 @@ const handleSaveWord = (word: DictionaryWord) => {
 		@click:close="handleCloseModal"
 		@click:remove="handleRemoveWord"
 		@click:save="handleSaveWord"
+		@click:update-translation="handleUpdateTranslation"
 	/>
 </template>
