@@ -26,6 +26,7 @@ const handleRemoveWord = (word: DictionaryWord) => {
 
 const handleSaveWord = (word: DictionaryWord) => {
 	modifyWord(word)
+	handleCloseModal()
 }
 </script>
 
