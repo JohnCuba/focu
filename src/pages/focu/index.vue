@@ -1,19 +1,15 @@
 <script setup lang="ts">
-import {computed, onMounted, provide, ref} from 'vue'
+import {onMounted, provide} from 'vue'
 import {
 	Dictionary,
 	DICTIONARY_STORE_INJECTION,
 	useDictionaryStore
 } from '~/features/dictionary'
-import {Editor, type EditorViewExpose} from '~/features/editor'
+import {Header} from '~/features/header'
+import {Editor} from '~/features/editor'
 
 const dictionaryStore = useDictionaryStore()
 provide(DICTIONARY_STORE_INJECTION, dictionaryStore)
-
-const editorRef = ref<EditorViewExpose>()
-const dictionaryStyle = computed(() => ({
-	'padding-bottom': `calc(${editorRef.value?.elementRef.offsetHeight}px + var(--spacing))`
-}))
 
 onMounted(() => {
 	dictionaryStore.fetchWords()
@@ -21,12 +17,13 @@ onMounted(() => {
 </script>
 
 <template>
-	<main class="main h-full bg-base-200">
+	<main class="main bg-base-200 min-h-screen">
 		<div class="relative container mx-auto">
-			<section class="p-2" :style="dictionaryStyle">
+			<Header class="container" />
+			<section class="px-2 py-20">
 				<Dictionary />
 			</section>
-			<Editor ref="editorRef" />
+			<Editor class="container" />
 		</div>
 	</main>
 </template>

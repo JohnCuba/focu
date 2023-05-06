@@ -39,7 +39,7 @@ watchEffect(() => {
 <template>
 	<button
 		v-if="isSupported"
-		class="btn btn-success btn-square"
+		class="btn btn-success btn-square drop-shadow"
 		:class="buttonClasses"
 		@click="handleClick"
 	>

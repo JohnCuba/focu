@@ -2,10 +2,10 @@ import { MaybeComputedRef, useScroll } from '@vueuse/core'
 import { ref, toRefs, watchEffect, ComputedRef } from 'vue'
 
 export const useHideOnScroll = ({
-	element = document,
+	scrollElement = document,
 	offset,
 }: Props = defaultProps) => {
-	const {directions, y, arrivedState} = useScroll(element, {behavior: 'smooth'})
+	const {directions, y, arrivedState} = useScroll(scrollElement, {behavior: 'smooth'})
 	const {bottom: isBottomArrived, top: isTopArrived} = toRefs(arrivedState)
 	const {top: toTop, bottom: toBottom} = toRefs(directions)
 	const isHidden = ref(false)
@@ -24,10 +24,10 @@ export const useHideOnScroll = ({
 }
 
 const defaultProps: Props = {
-	element: document,
+	scrollElement: document,
 }
 
 type Props = {
-	element?: MaybeComputedRef<Document | HTMLElement | SVGElement | Window | null | undefined>,
+	scrollElement?: MaybeComputedRef<Document | HTMLElement | SVGElement | Window | null | undefined>,
 	offset?: ComputedRef<number>
 }
