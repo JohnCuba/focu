@@ -2,6 +2,7 @@
 import { ref, computed, inject } from 'vue'
 import { DICTIONARY_STORE_INJECTION } from '~/features/dictionary'
 import { useHideOnScroll } from '~/lib/hooks/useHideOnScroll'
+
 const dictionaryStore = inject(DICTIONARY_STORE_INJECTION)
 const searchWord = computed(() => dictionaryStore?.filterValues?.value || '')
 
@@ -9,6 +10,7 @@ const elementRef = ref<HTMLDivElement>()
 const componentHeight = computed(() => elementRef.value?.offsetHeight || 0)
 
 const {isHidden} = useHideOnScroll({offset: componentHeight})
+
 const handleSearchWord = ({target}: Event) => {
 	dictionaryStore?.setFilterValue('value', (target as HTMLInputElement).value)
 }

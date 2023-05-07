@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { type InjectionKey, ref, computed } from 'vue'
+import { type InjectionKey, ref } from 'vue'
 import { DictionaryRepository } from './dictionary.repository'
 import { useFilter } from '~/lib/hooks/useFilter'
 
