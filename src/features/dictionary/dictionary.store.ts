@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { type InjectionKey, ref } from 'vue'
 import { DictionaryRepository } from './dictionary.repository'
-import { useFilter } from '~/lib/hooks/useFilter'
+import { useFilter } from '~/lib/hooks/use_filter'
 
 export const DICTIONARY_STORE_INJECTION: InjectionKey<ReturnType<typeof useDictionaryStore>> = Symbol('dictionary-store')
 
@@ -16,7 +16,7 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		words,
 		{
 			value: (entity, value) => {
-				return entity.value.includes(value as string)
+				return entity.value.toLowerCase().includes(String(value).toLowerCase() as string)
 			},
 		}
 	)

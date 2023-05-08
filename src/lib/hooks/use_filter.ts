@@ -11,7 +11,14 @@ export const useFilter = <T extends object>(
 			.filter((element) =>{
 				return Object
 					.entries(filterValues)
-					.every(([key, value]) => filters[key as keyof T] ? filters[key as keyof T]?.(element, value) : true)
+					.every(([key, value]) => {
+						if (!filters[key as keyof T]) {
+							console.warn(`Filter func didn't passed for ${key}`)
+							return true
+						}
+
+						return filters[key as keyof T]?.(element, value)
+					})
 				})
 			)
 
