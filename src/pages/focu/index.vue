@@ -17,7 +17,7 @@ onMounted(() => {
 </script>
 
 <template>
-	<main class="main bg-base-200 min-h-screen">
+	<main class="min-h-full bg-base-200">
 		<div class="relative container mx-auto">
 			<Header class="container" />
 			<section class="px-2 py-20">
@@ -28,12 +28,3 @@ onMounted(() => {
 	</main>
 </template>
 
-<style scoped>
-.main {
-	row-gap: calc(var(--spacing) * 2);
-}
-
-.dictionary {
-	margin-top: 90px;
-}
-</style>
