@@ -8,7 +8,7 @@ import Speech from './speech.vue'
 const elementRef = ref<HTMLDivElement>()
 
 const editorStore = useEditorStore()
-const {value, isLoading} = storeToRefs(editorStore)
+const {word, isLoading} = storeToRefs(editorStore)
 const {submitWord} = editorStore
 const componentHeight = computed(() => elementRef.value?.offsetHeight || 0)
 
@@ -22,7 +22,7 @@ const {isHidden} = useHideOnScroll({offset: componentHeight})
 		:class="{'bottom-1': !isHidden}"
 	>
 		<input
-			v-model="value"
+			v-model="word"
 			type="text"
 			autocomplete="off"
 			class="input input-bordered input-success flex-1 drop-shadow"
@@ -30,6 +30,6 @@ const {isHidden} = useHideOnScroll({offset: componentHeight})
 			:disabled="isLoading"
 			@keypress.enter="submitWord"
 		/>
-		<Speech v-model="value" :disabled="isLoading" />
+		<Speech v-model="word" :disabled="isLoading" />
 	</div>
 </template>

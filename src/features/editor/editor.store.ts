@@ -7,28 +7,31 @@ export const EDITOR_STORE_INJECTION: InjectionKey<ReturnType<typeof useEditorSto
 export const useEditorStore = defineStore('editor', () => {
 	const dictionaryStore = inject(DICTIONARY_STORE_INJECTION)
 
-	const value = ref('')
+	const word = ref('')
 	const isLoading = ref(false)
 
-	async function submitWord() {
+	const submitWord = async () => {
 		isLoading.value = true
-		const word = value.value
 
-		if (!word) return
+		if (!word.value) {
+			_reset()
+			return
+		}
 
 		await dictionaryStore?.addWord({
-			value: word
+			value: word.value
 		})
+
 		_reset()
+	}
+
+	const _reset = () => {
+		word.value = ''
 		isLoading.value = false
 	}
 
-	function _reset() {
-		value.value = ''
-	}
-
 	return {
-		value,
+		word,
 		isLoading,
 		submitWord
 	}
