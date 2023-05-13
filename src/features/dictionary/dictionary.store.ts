@@ -56,7 +56,8 @@ export const useDictionaryStore = defineStore('dictionary', () => {
 		words.value = words.value.filter(({id}) => id !== deletedId)
 	}
 
-	const modifyWord = async (word: DictionaryWord) => {
+	// eslint-disable-next-line @typescript-eslint/no-unused-vars -- just remove key from object
+	const modifyWord = async ({isLoadTranslation, ...word}: DictionaryWord) => {
 		_editWordInStore({ ...word, isLoadTranslation: true})
 
 		let resultWord = word
