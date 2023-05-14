@@ -18,7 +18,7 @@ export class Fetcher {
 		return data ? {body: JSON.stringify(data)} : {}
 	}
 
-	private async makeRequest(path: string, method: FetcherRequestMethod, params?: FetcherRequestOptions) {
+	private async makeRequest(path: string, method: FetcherRequestMethod, params?: Partial<FetcherRequestOptions>) {
 		const url = new URL(path, this.host)
 		const response = await globalThis.fetch(
 			url,
@@ -26,7 +26,8 @@ export class Fetcher {
 				method,
 				...this.prepareBody(params?.body),
 				headers: {
-					...this._headers
+					...this._headers,
+					...params?.headers,
 				}
 			}
 		)
@@ -39,8 +40,8 @@ export class Fetcher {
 		}
 	}
 
-	get = async <T>(path: string): Promise<T> => {
-		return this.makeRequest(path, 'GET')
+	get = async <T>(path: string, params?: Omit<FetcherRequestOptions, 'body'>): Promise<T> => {
+		return this.makeRequest(path, 'GET', params)
 	}
 
 	post = async <T>(path: string, {body}: FetcherRequestOptions): Promise<T> => {

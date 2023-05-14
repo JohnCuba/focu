@@ -5,4 +5,5 @@ export type FetcherOptions = {
 }
 export type FetcherRequestOptions = {
 	body: Record<string, string | number>
+	headers?: Record<string, string>
 }
