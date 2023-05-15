@@ -2,14 +2,14 @@
 import {onMounted, provide} from 'vue'
 import {
 	Dictionary,
+	useDictionaryStore,
 	DICTIONARY_STORE_INJECTION,
-	useDictionaryStore
 } from '~/features/dictionary'
 import {
-	SETTINGS_STORE_INJECTION,
-	useSettingsStore
-} from '~/features/settings/store/settings.store'
-import {Header} from '~/features/header'
+	Header,
+	useSettingsStore,
+	SETTINGS_STORE_INJECTION
+} from '~/features/settings'
 import {Editor} from '~/features/editor'
 
 const dictionaryStore = useDictionaryStore()
