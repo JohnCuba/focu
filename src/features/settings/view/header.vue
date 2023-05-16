@@ -3,6 +3,8 @@ import { ref, computed, inject } from 'vue'
 import { DICTIONARY_STORE_INJECTION } from '~/features/dictionary'
 import { SETTINGS_STORE_INJECTION } from '~/features/settings/store/settings.store'
 import { useHideOnScroll } from '~/lib/hooks/useHideOnScroll'
+import {PersonIcon} from '~/lib/view/icons'
+import SearchBar from './search_bar.vue'
 
 const dictionaryStore = inject(DICTIONARY_STORE_INJECTION)
 const settingsStore = inject(SETTINGS_STORE_INJECTION)
@@ -31,20 +33,18 @@ const handleSearchWord = ({target}: Event) => {
 			</h1>
 		</div>
 		<div class="navbar-end gap-x-2">
-			<div class="form-control">
-				<input
-					:value="searchWord"
-					type="text"
-					placeholder="Search"
-					class="input input-bordered"
-					@input="handleSearchWord"
-					@keypress.enter="handleSearchWord"
-				/>
-			</div>
+			<SearchBar
+				:value="searchWord"
+				:on-input="handleSearchWord"
+				:on-submit="handleSearchWord"
+				:input-class="'hidden mm:block'"
+				:dropdown-class="'mm:hidden'"
+			/>
 			<div class="dropdown dropdown-end">
 				<label tabindex="0" class="btn btn-ghost btn-circle avatar">
-					<div class="w-10 rounded-full">
-						<img :src="userInfo ? userInfo.picture : '/focu/img/icons/person.svg'" referrerpolicy="no-referrer" />
+					<div class="w-6 rounded-full">
+						<img v-if="userInfo" :src="userInfo.picture" referrerpolicy="no-referrer" />
+						<PersonIcon v-else />
 					</div>
 				</label>
 				<ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
