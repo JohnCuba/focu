@@ -1,9 +1,5 @@
 import { Fetcher } from '~/lib/fetcher'
 
-export type UserInfo = {
-	picture: string
-}
-
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID
 
 export class GoogleApiService {

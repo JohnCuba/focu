@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, computed, inject } from 'vue'
 import { DICTIONARY_STORE_INJECTION } from '~/features/dictionary'
-import { SETTINGS_STORE_INJECTION } from '~/features/settings/store/settings.store'
+import { SETTINGS_STORE_INJECTION } from '~/features/settings/settings.store'
 import { useHideOnScroll } from '~/lib/hooks/useHideOnScroll'
 import {PersonIcon} from '~/lib/view/icons'
 import SearchBar from './search_bar.vue'
@@ -9,7 +9,7 @@ import SearchBar from './search_bar.vue'
 const dictionaryStore = inject(DICTIONARY_STORE_INJECTION)
 const settingsStore = inject(SETTINGS_STORE_INJECTION)
 const searchWord = computed(() => dictionaryStore?.filterValues?.value || '')
-const userInfo = computed(() => settingsStore?.userInfo)
+const user = computed(() => settingsStore?.user)
 
 const elementRef = ref<HTMLDivElement>()
 const componentHeight = computed(() => elementRef.value?.offsetHeight || 0)
@@ -43,19 +43,19 @@ const handleSearchWord = ({target}: Event) => {
 			<div class="dropdown dropdown-end">
 				<label tabindex="0" class="btn btn-ghost btn-circle avatar">
 					<div class="w-6 rounded-full">
-						<img v-if="userInfo" :src="userInfo.picture" referrerpolicy="no-referrer" />
+						<img v-if="user" :src="user.picture" referrerpolicy="no-referrer" />
 						<PersonIcon v-else />
 					</div>
 				</label>
 				<ul tabindex="0" class="mt-3 p-2 shadow menu menu-compact dropdown-content bg-base-100 rounded-box w-52">
-					<li v-if="!userInfo">
-						<span @click="settingsStore?.promptToLoginWithGoogle">
+					<li v-if="!user">
+						<span @click="settingsStore?.loginWithGoogle">
 							Login with Google
 						</span>
 					</li>
-					<li v-if="userInfo">
-						<span @click="settingsStore?.logoutFromGoogle">
-							Logout from Google
+					<li v-if="user">
+						<span @click="settingsStore?.logout">
+							Logout
 						</span>
 					</li>
 				</ul>
