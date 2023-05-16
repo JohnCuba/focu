@@ -14,7 +14,7 @@ export const useSettingsStore = defineStore('settings', () => {
 	}
 
 	const loginWithGoogle = () => {
-		repository.login('google', void handleGetUserInfo('google'))
+		repository.login('google', () => void handleGetUserInfo('google'))
 	}
 
 	const logout = () => {
