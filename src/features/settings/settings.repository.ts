@@ -1,44 +1,25 @@
-import { GoogleApiService } from './service/google.api.service'
+import { AuthApiService } from './service/auth.api.service'
 
 export class SettingsRepository {
-	private googleService!: GoogleApiService
-	// TODO: Change type GoogleApiService to abstract
-	private authProviders!: Record<AuthProviders, GoogleApiService>
+	private authService!: AuthApiService
 
 	constructor() {
-		this.googleService = new GoogleApiService()
-		this.authProviders = {
-			'google': this.googleService
-		}
+		this.authService = new AuthApiService()
 	}
 
-	checkAuth() {
-		let authenticatedProvider: AuthProviders | null = null
-
-		for (const [provider, service] of Object.entries(this.authProviders)) {
-			if (service.isLoggedIn) {
-				authenticatedProvider = provider as AuthProviders
-				break
-			}
-			continue
-		}
-
-		return authenticatedProvider
+	async checkIsLoggedIn() {
+		return Boolean(await this.authService.getCurrentSession())
 	}
 
-	login(
-		provider: keyof typeof this.authProviders,
-		callback?: () => void,
-		error_callback?: () => void,
-	) {
-		return this.authProviders[provider].login(callback, error_callback)
+	login() {
+		this.authService.loginWithGoogle()
 	}
 
 	logout() {
-		Object.values(this.authProviders).forEach(({logout}) => logout())
+		this.authService.logout()
 	}
 
-	getUserInfo(provider: keyof typeof this.authProviders) {
-		return this.authProviders[provider].getUserInfo()
+	getUserInfo() {
+		return this.authService.getUserInfo()
 	}
 }

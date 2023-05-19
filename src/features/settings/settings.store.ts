@@ -7,27 +7,27 @@ export const SETTINGS_STORE_INJECTION: InjectionKey<ReturnType<typeof useSetting
 export const useSettingsStore = defineStore('settings', () => {
 	const repository = new SettingsRepository()
 
-	const user = ref<UserInfo | null>(null)
+	const user = ref<Awaited<ReturnType<SettingsRepository['getUserInfo']>>>()
 
-	const handleGetUserInfo = async (provider: AuthProviders) => {
-		user.value = await repository.getUserInfo(provider)
+	const getUserInfo = async () => {
+		user.value = await repository.getUserInfo()
 	}
 
 	const loginWithGoogle = () => {
-		repository.login('google', () => void handleGetUserInfo('google'))
+		repository.login()
 	}
 
 	const logout = () => {
 		repository.logout()
-		user.value = null
+		user.value = undefined
 	}
 
-	const initialAuthCheck = () => {
-		const authenticatedProvider = repository.checkAuth()
+	const initialAuthCheck = async () => {
+		const isLoggedIn = await repository.checkIsLoggedIn()
 
-		if (!authenticatedProvider) {return}
-
-		handleGetUserInfo(authenticatedProvider)
+		if (isLoggedIn) {
+			getUserInfo()
+		}
 	}
 
 	onMounted(() => {
