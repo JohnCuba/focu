@@ -1,4 +1,4 @@
-import {Account, Avatars, Client} from 'appwrite'
+import {Account, Avatars, Client, Databases} from 'appwrite'
 
 let appwriteClientInstance!: Client
 export const getAppwriteClient = () => {
@@ -25,4 +25,13 @@ export const getAppwriteAvatarsClient = () => {
 	}
 
 	return appwriteAvatarClientInstance
+}
+
+let appwriteDatabasesClientInstance!: Databases
+export const getAppwriteDatabasesClient = () => {
+	if (!appwriteDatabasesClientInstance) {
+		appwriteDatabasesClientInstance = new Databases(getAppwriteClient())
+	}
+
+	return appwriteDatabasesClientInstance
 }
