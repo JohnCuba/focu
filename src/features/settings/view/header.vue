@@ -43,7 +43,7 @@ const handleSearchWord = ({target}: Event) => {
 			<div class="dropdown dropdown-end">
 				<label tabindex="0" class="btn btn-ghost btn-circle avatar">
 					<div class="w-6 rounded-full">
-						<img v-if="user" :src="user.picture" referrerpolicy="no-referrer" />
+						<img v-if="user" :src="user.avatar_url.toString()" referrerpolicy="no-referrer" />
 						<PersonIcon v-else />
 					</div>
 				</label>
