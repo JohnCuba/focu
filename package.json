@@ -39,6 +39,7 @@
     "typescript": "^5.0.4",
     "vite": "^4.2.0",
     "vite-plugin-pages": "^0.29.0",
+    "vite-plugin-pwa": "^0.15.0",
     "vitest": "^0.30.0",
     "vitest-fetch-mock": "^0.2.2",
     "vue-eslint-parser": "^9.1.1",
