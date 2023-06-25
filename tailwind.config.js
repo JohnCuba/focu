@@ -16,7 +16,8 @@ export default {
   // eslint-disable-next-line no-undef
   plugins: [require('daisyui')],
 	daisyui: {
-    themes: ['pastel', 'aqua'],
+    themes: ['acid', 'aqua'],
+		darkTheme: 'aqua'
   },
 }
 

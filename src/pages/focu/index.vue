@@ -1,37 +1,41 @@
 <script setup lang="ts">
-import {onMounted, provide} from 'vue'
+import {provide} from 'vue'
 import {
-	Dictionary,
 	useDictionaryStore,
 	DICTIONARY_STORE_INJECTION,
-} from '~/features/dictionary'
+} from '~/modules/dictionary/store'
 import {
-	Header,
 	useSettingsStore,
 	SETTINGS_STORE_INJECTION
-} from '~/features/settings'
-import {Editor} from '~/features/editor'
+} from '~/modules/settings/store'
+import {DictionaryTable, EditorBottomSheet} from '~/modules/dictionary/view'
+import {Header} from '~/modules/settings/view'
 
 const dictionaryStore = useDictionaryStore()
 provide(DICTIONARY_STORE_INJECTION, dictionaryStore)
 
 const settingsStore = useSettingsStore()
 provide(SETTINGS_STORE_INJECTION, settingsStore)
-
-onMounted(() => {
-	dictionaryStore.fetchWords()
-})
 </script>
 
 <template>
-	<main class="min-h-full bg-base-200">
+	<main class="min-h-full">
 		<div class="relative container mx-auto">
 			<Header class="container" />
-			<section class="px-2 py-20">
-				<Dictionary />
+			<section class="page-content">
+				<DictionaryTable
+					head-class="hidden t:table-header-group"
+					foot-class="hidden t:table-header-group"
+				/>
 			</section>
-			<Editor class="container" />
+			<EditorBottomSheet class="container block t:hidden" />
 		</div>
 	</main>
 </template>
 
+<style>
+.page-content {
+	padding-top: var(--page-content-top-offset, 0px);
+	padding-bottom: var(--page-content-bottom-offset, 0px);
+}
+</style>
