@@ -1,9 +1,12 @@
 import {Account, Avatars, Client, Databases} from 'appwrite'
 
+const APPWRITE_PROJECT_ID = import.meta.env.VITE_PROJECT_ID
+const APPWRITE_ENDPOINT = 'https://cloud.appwrite.io/v1'
+
 let appwriteClientInstance!: Client
 export const getAppwriteClient = () => {
 	if (!appwriteClientInstance) {
-		appwriteClientInstance = new Client().setEndpoint('https://cloud.appwrite.io/v1').setProject('64568536a05ca55a3822')
+		appwriteClientInstance = new Client().setEndpoint(APPWRITE_ENDPOINT).setProject(APPWRITE_PROJECT_ID)
 	}
 
 	return appwriteClientInstance

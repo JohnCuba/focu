@@ -7,5 +7,4 @@ type DictionaryWord = {
 
 	value: string
 	translations: string[]
-	isLoadTranslation?: boolean
 }
