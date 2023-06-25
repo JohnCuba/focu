@@ -12,6 +12,9 @@ export default defineConfig({
     },
   },
 	base: '/focu',
+  define: {
+    global: 'window',
+  },
   plugins: [
 		Vue(),
 		Pages(),
@@ -19,7 +22,7 @@ export default defineConfig({
 			injectRegister: 'auto',
 			registerType: 'autoUpdate',
       workbox: {
-        globPatterns: ['**/*.{js,css,html,ico,png,svg}']
+        globPatterns: ['**/*.{js,css,html,ico,svg}']
       },
 			devOptions: {
         enabled: true

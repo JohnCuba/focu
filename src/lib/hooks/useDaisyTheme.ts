@@ -22,7 +22,6 @@ export const useDaisyTheme = ({isRoot}: Props) => {
 		const newColorScheme = event.matches ? THEMES[1] : THEMES[0]
 
 		changeTheme(newColorScheme)
-
 	}
 
 	onMounted(() => {
