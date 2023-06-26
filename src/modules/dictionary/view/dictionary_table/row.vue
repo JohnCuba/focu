@@ -19,10 +19,9 @@ const handleClick = () => {
 			{{ word.value }}
 		</td>
 		<td class="cell">
-			<span v-if="!word.isLoadTranslation">
+			<span>
 				{{ word.translations.join(', ') }}
 			</span>
-			<progress v-else class="progress" />
 		</td>
 	</tr>
 </template>
